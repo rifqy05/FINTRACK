@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Transactions from "./pages/Transactions.jsx";
 import Budgets from "./pages/Budgets.jsx";
 import Reports from "./pages/Reports.jsx";
+import Assistant from "./pages/Assistant.jsx";
 import Settings from "./pages/Settings.jsx";
 import { buildDemoData } from "./utils/demoData.js";
 import { currentMonthKey } from "./utils/dates.js";
@@ -47,6 +48,7 @@ const PAGE_META = {
   transactions: { title: "Transaksi", description: "Catat, cari, dan kelola semua pemasukan dan pengeluaran." },
   budgets: { title: "Anggaran", description: "Atur batas pengeluaran per kategori setiap bulan." },
   reports: { title: "Laporan", description: "Lihat ringkasan dan tren per bulan." },
+  assistant: { title: "Asisten AI", description: "Tanya jawab tentang keuangan Anda, dijawab dari data akun Anda sendiri." },
   settings: { title: "Pengaturan", description: "Tema, akun cloud, ekspor, backup, dan pengelolaan data." },
 };
 
@@ -469,6 +471,7 @@ export default function App() {
               <Budgets transactions={transactions} budgets={budgets} onSave={saveBudget} onDelete={deleteBudget} />
             )}
             {page === "reports" && <Reports transactions={transactions} onNotify={notify} />}
+            {page === "assistant" && <Assistant user={user} onOpenAuth={() => setAuthModalOpen(true)} />}
             {page === "settings" && (
               <Settings
                 theme={theme}

@@ -68,7 +68,8 @@ export default function Sidebar({ current, onNavigate, user = null, onOpenAuth, 
 
       <nav
         aria-label="Menu utama ponsel"
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
+        style={{ gridTemplateColumns: `repeat(${NAV_ITEMS.length}, minmax(0, 1fr))` }}
+        className="fixed inset-x-0 bottom-0 z-30 grid border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] lg:hidden"
       >
         {NAV_ITEMS.map(({ id, label, short, icon: Icon }) => {
           const active = current === id;
