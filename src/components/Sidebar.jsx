@@ -2,7 +2,7 @@ import { Wallet } from "lucide-react";
 import { NAV_ITEMS } from "./navItems.js";
 
 // Desktop: sidebar di kiri. Ponsel dan tablet: menu ringkas di bagian bawah layar.
-export default function Sidebar({ current, onNavigate }) {
+export default function Sidebar({ current, onNavigate, user = null, onOpenAuth, onSignOut }) {
   return (
     <>
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-60 flex-col border-r border-line bg-surface px-4 py-6 lg:flex">
@@ -33,9 +33,37 @@ export default function Sidebar({ current, onNavigate }) {
           })}
         </nav>
 
-        <p className="mt-auto px-2 text-xs leading-relaxed text-ink-soft">
-          Data tersimpan di browser ini saja. Buat backup berkala di Pengaturan.
-        </p>
+        {user ? (
+          <div className="mt-auto flex flex-col gap-2 rounded-lg border border-line bg-surface-2 p-3">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="size-2 rounded-full bg-brand" aria-hidden="true" />
+              <span className="truncate font-medium text-ink" title={user.email}>
+                {user.email}
+              </span>
+            </div>
+            <p className="text-[11px] text-ink-soft">Akun Cloud Aktif</p>
+            <button
+              type="button"
+              onClick={onSignOut}
+              className="text-left text-xs font-medium text-expense hover:underline"
+            >
+              Keluar (Logout)
+            </button>
+          </div>
+        ) : (
+          <div className="mt-auto flex flex-col gap-2 border-t border-line pt-3">
+            <button
+              type="button"
+              onClick={onOpenAuth}
+              className="btn btn-secondary w-full justify-center text-xs"
+            >
+              Masuk Cloud
+            </button>
+            <p className="px-1 text-[11px] leading-relaxed text-ink-soft">
+              Mode lokal browser. Masuk untuk menyinkronkan antar-perangkat.
+            </p>
+          </div>
+        )}
       </aside>
 
       <nav

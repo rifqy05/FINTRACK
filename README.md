@@ -1,6 +1,6 @@
 # FinTrack: Personal Finance Tracker
 
-Website pencatatan keuangan pribadi (frontend saja). Catat pemasukan dan pengeluaran, pantau saldo, atur anggaran per kategori, dan lihat laporan bulanan. Data tersimpan di browser lewat `localStorage`. Tidak ada backend, login, atau database online.
+Website pencatatan keuangan pribadi. Catat pemasukan dan pengeluaran, pantau saldo, atur anggaran per kategori, dan lihat laporan bulanan. Aplikasi bisa dipakai langsung tanpa akun (data tersimpan di browser lewat `localStorage`), atau masuk ke akun cloud (Supabase) agar data tersinkron antar-perangkat. Tanpa konfigurasi Supabase, FinTrack tetap berjalan penuh dalam mode lokal.
 
 ## Instalasi dan menjalankan
 
@@ -31,8 +31,11 @@ fintrack/
 │   │   ├── Sidebar, Header, SummaryCard, EmptyState
 │   │   ├── TransactionForm, TransactionTable, CategoryBreakdown
 │   │   ├── Charts (bar dan garis), BudgetProgress, MonthPicker
+│   │   ├── AuthModal, MigrationModal
 │   │   └── Modal, ConfirmDialog, Field, Toast, navItems
 │   ├── pages/           Dashboard, Transactions, Budgets, Reports, Settings
+│   ├── services/        akses data: authService, transactionService, budgetService,
+│   │                    migrationService, supabaseClient, dataMappers
 │   ├── utils/
 │   │   ├── formatCurrency.js        format Rupiah dan persen
 │   │   ├── financeCalculations.js   SEMUA rumus (saldo, saving rate, anggaran, data grafik)
@@ -43,7 +46,9 @@ fintrack/
 │   ├── App.jsx          state utama, navigasi, penyimpanan
 │   ├── main.jsx
 │   └── index.css        tema terang/gelap dan style global
-└── tests/               test rumus, validasi, CSV, backup
+├── supabase/schema.sql  skema tabel, index, trigger, dan policy RLS
+├── docs/                panduan konfigurasi Supabase
+└── tests/               test rumus, validasi, CSV, backup, dan layanan cloud
 ```
 
 ## Cara kerja penyimpanan lokal
@@ -69,9 +74,21 @@ fintrack/
 - Import JSON divalidasi penuh (struktur, tipe, kategori, id ganda) sebelum data diganti, dengan konfirmasi. Jika tidak valid, data lama tetap aman.
 - Keterangan transaksi dirender sebagai teks biasa, tidak pernah sebagai HTML.
 
+## Sinkronisasi Cloud (Supabase)
+
+FinTrack mendukung autentikasi dan sinkronisasi cloud dengan Supabase (PostgreSQL & Supabase Auth). Jika pengguna belum masuk atau Supabase belum dikonfigurasi, aplikasi tetap berjalan lancar dalam **mode lokal** (`localStorage`).
+
+1. Salin file template environment:
+   ```bash
+   cp .env.example .env
+   ```
+2. Isi `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` dari Project Settings > API di Supabase.
+3. Eksekusi skema database `supabase/schema.sql` di Supabase SQL Editor (sudah termasuk Row Level Security dan triggers).
+4. Panduan langkah demi langkah dapat dibaca di `docs/SUPABASE_SETUP.md`.
+
 ## Pengujian
 
-- `npm test`: 42 unit test (rumus, filter, anggaran, data grafik, validasi, CSV, backup, format angka).
+- `npm test`: unit test untuk rumus keuangan, filter, anggaran, data grafik, validasi, CSV, backup, mapper cloud, konversi UUID idempoten, dan penanganan error.
 - Uji end-to-end di browser (Playwright) dijalankan saat pengembangan: alur tambah/edit/hapus, validasi, filter, persistensi setelah refresh, export/import, tema, anggaran, dan tidak ada overflow horizontal di 360, 768, dan 1280 px pada mode terang dan gelap.
 
 ## Aksesibilitas
