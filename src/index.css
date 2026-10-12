@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* Tema gelap dikontrol lewat class "dark" di <html> (lihat index.html dan App.jsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Token desain. Satu aksen (navy/biru), hijau hanya untuk pemasukan, coral hanya untuk pengeluaran.
+  Aturan bentuk: kontrol (tombol, input) rounded-lg, wadah (kartu, dialog) rounded-2xl, lencana rounded-full.
+*/
+:root {
+  --canvas: #f2f4f8;
+  --surface: #fcfcfe;
+  --surface-2: #edf0f6;
+  --line: #dce1eb;
+  --ink: #0f1b33;
+  --ink-soft: #55627a;
+  --brand: #1b2f5e;
+  --brand-ink: #f4f7ff;
+  --brand-soft: #e3e9f7;
+  --hero: #1b2f5e;
+  --hero-ink: #f4f7ff;
+  --hero-soft: #b9c6e6;
+  --income: #047857;
+  --income-soft: #ddf3ea;
+  --expense: #c2372d;
+  --expense-soft: #fbe4e1;
+  --expense-ink: #fff8f7;
+  --warn: #8a5a00;
+  --warn-soft: #fbefd2;
+  --warn-bar: #b87900;
+  --focus: #3b63d9;
+  --shadow: 0 1px 2px rgb(15 27 51 / 0.06), 0 4px 16px rgb(15 27 51 / 0.04);
+
+  --cat-1: #1b2f5e;
+  --cat-2: #3b63d9;
+  --cat-3: #62a8d8;
+  --cat-4: #1a8f80;
+  --cat-5: #8bc48a;
+  --cat-6: #e0a93b;
+  --cat-7: #e2725b;
+  --cat-8: #b5483f;
+  --cat-9: #6b7a99;
+  --cat-10: #a9b4c9;
+}
+
+.dark {
+  --canvas: #0a101c;
+  --surface: #111a2c;
+  --surface-2: #18233a;
+  --line: #243251;
+  --ink: #e7ecf6;
+  --ink-soft: #98a5bf;
+  --brand: #8faeff;
+  --brand-ink: #0a101c;
+  --brand-soft: #1b2b52;
+  --hero: #1c2d57;
+  --hero-ink: #eef2fd;
+  --hero-soft: #a9b8dc;
+  --income: #34d399;
+  --income-soft: #0f2b24;
+  --expense: #ff8a7a;
+  --expense-soft: #33191a;
+  --expense-ink: #2a0b08;
+  --warn: #f5c451;
+  --warn-soft: #2b2210;
+  --warn-bar: #f5c451;
+  --focus: #8faeff;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+
+  --cat-1: #9db4f5;
+  --cat-2: #5c86f0;
+  --cat-3: #7cc3ec;
+  --cat-4: #3dc2ae;
+  --cat-5: #a6d9a4;
+  --cat-6: #f0c260;
+  --cat-7: #f2917b;
+  --cat-8: #d9685d;
+  --cat-9: #8e9bb8;
+  --cat-10: #5e6c8a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-hero: var(--hero);
+  --color-hero-ink: var(--hero-ink);
+  --color-hero-soft: var(--hero-soft);
+  --color-income: var(--income);
+  --color-income-soft: var(--income-soft);
+  --color-expense: var(--expense);
+  --color-expense-soft: var(--expense-soft);
+  --color-expense-ink: var(--expense-ink);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-warn-bar: var(--warn-bar);
+  --shadow-card: var(--shadow);
+}
+
+@layer base {
+  html {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  button,
+  [role="button"],
+  select,
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+  button,
+  a,
+  input,
+  select {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-surface shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium whitespace-nowrap;
+    @apply transition-[background-color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand text-brand-ink hover:bg-brand/90;
+  }
+  .btn-secondary {
+    @apply border border-line bg-surface text-ink hover:bg-surface-2;
+  }
+  .btn-danger {
+    @apply bg-expense text-expense-ink hover:bg-expense/90;
+  }
+  .btn-icon {
+    @apply inline-flex size-11 items-center justify-center rounded-lg text-ink-soft transition-colors duration-150 hover:bg-surface-2 hover:text-ink;
+  }
+
+  .input {
+    @apply min-h-11 w-full rounded-lg border border-line bg-surface px-3 text-sm text-ink placeholder:text-ink-soft;
+    @apply transition-colors duration-150 hover:border-ink-soft/60 aria-[invalid=true]:border-expense;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dipakai saat berpindah halaman dan saat toast muncul (umpan balik bahwa sesuatu berubah). */
+.rise-in {
+  animation: rise-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
