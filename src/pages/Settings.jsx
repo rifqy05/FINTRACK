@@ -1,19 +1,27 @@
 import { useRef, useState } from "react";
 import {
+  Cloud,
+  CloudUpload,
   Database,
   FileJson,
   FileSpreadsheet,
   FlaskConical,
+  LogIn,
+  LogOut,
   Moon,
+  RefreshCw,
   ShieldCheck,
+  SlidersHorizontal,
   Sun,
   Trash2,
   Upload,
 } from "lucide-react";
 import ConfirmDialog from "../components/ConfirmDialog.jsx";
+import GoogleSheetsModal from "../components/GoogleSheetsModal.jsx";
 import { todayISO } from "../utils/dates.js";
 import { createBackupJson, downloadTextFile, transactionsToCsv } from "../utils/fileExport.js";
 import { parseBackup } from "../utils/validation.js";
+import { getSheetsConfig, syncTransactionsToGoogleSheets } from "../services/googleSheetsService.js";
 
 function Section({ icon: Icon, title, description, children }) {
   return (
@@ -41,11 +49,39 @@ export default function Settings({
   onClearAll,
   onLoadDemo,
   onNotify,
+  user = null,
+  onOpenAuth,
+  onSignOut,
+  onStartMigration,
+  hasLocalData = false,
+  localCounts = { transactions: 0, budgets: 0 },
 }) {
   const fileRef = useRef(null);
   const [pendingImport, setPendingImport] = useState(null);
   const [confirm, setConfirm] = useState(null); // "clear" | "demo" | null
+  const [sheetsConfig, setSheetsConfig] = useState(getSheetsConfig);
+  const [sheetsModalOpen, setSheetsModalOpen] = useState(false);
+  const [syncingSheets, setSyncingSheets] = useState(false);
   const hasData = transactions.length > 0 || budgets.length > 0;
+
+  async function handleSyncSheets() {
+    if (transactions.length === 0) {
+      onNotify("error", "Belum ada transaksi untuk disinkronkan.");
+      return;
+    }
+    setSyncingSheets(true);
+    const res = await syncTransactionsToGoogleSheets(transactions, sheetsConfig);
+    setSyncingSheets(false);
+    setSheetsConfig(getSheetsConfig());
+    if (res.ok) {
+      onNotify(
+        "success",
+        `Sinkronisasi Google Sheets berhasil: ${res.stats.inserted} baru, ${res.stats.updated} diperbarui.`
+      );
+    } else {
+      onNotify("error", res.error || "Gagal menyinkronkan ke Google Sheets.");
+    }
+  }
 
   function exportCsv() {
     downloadTextFile(`fintrack-transaksi-${todayISO()}.csv`, transactionsToCsv(transactions), "text/csv");
@@ -75,6 +111,48 @@ export default function Settings({
 
   return (
     <div className="flex flex-col gap-4 sm:gap-5">
+      <Section
+        icon={Cloud}
+        title="Akun & Sinkronisasi Cloud"
+        description={
+          user
+            ? `Terhubung sebagai ${user.email}. Transaksi dan anggaran tersimpan otomatis ke Supabase.`
+            : "Data saat ini tersimpan di browser ini saja. Masuk atau daftar akun untuk menyinkronkan data antar-perangkat."
+        }
+      >
+        {user ? (
+          <>
+            <button
+              type="button"
+              onClick={onSignOut}
+              className="btn btn-secondary"
+            >
+              <LogOut size={18} strokeWidth={1.75} aria-hidden="true" />
+              Keluar dari Akun
+            </button>
+            {hasLocalData ? (
+              <button
+                type="button"
+                onClick={onStartMigration}
+                className="btn btn-primary"
+              >
+                <CloudUpload size={18} strokeWidth={1.75} aria-hidden="true" />
+                Migrasikan Data Lokal ({localCounts.transactions} transaksi, {localCounts.budgets} anggaran)
+              </button>
+            ) : null}
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={onOpenAuth}
+            className="btn btn-primary"
+          >
+            <LogIn size={18} strokeWidth={1.75} aria-hidden="true" />
+            Masuk / Buat Akun Cloud
+          </button>
+        )}
+      </Section>
+
       <Section
         icon={theme === "dark" ? Moon : Sun}
         title="Tampilan"
@@ -113,6 +191,81 @@ export default function Settings({
           <FileSpreadsheet size={18} strokeWidth={1.75} aria-hidden="true" />
           Unduh CSV
         </button>
+      </Section>
+
+      <Section
+        icon={FileSpreadsheet}
+        title="Integrasi Google Sheets"
+        description="Sinkronkan data transaksi ke spreadsheet Google secara satu arah dan idempoten (tanpa duplikasi baris)."
+      >
+        {sheetsConfig.webAppUrl ? (
+          <div className="flex w-full flex-col gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span className="font-medium text-brand">
+                Status: Terhubung ke Web App
+              </span>
+              <span className="text-ink-soft">
+                {sheetsConfig.lastSyncAt
+                  ? `Terakhir sinkron: ${sheetsConfig.lastSyncAt}`
+                  : "Belum pernah disinkronkan"}
+              </span>
+            </div>
+
+            {sheetsConfig.lastSyncStats ? (
+              <p className="text-xs text-ink-soft">
+                Hasil terakhir: {sheetsConfig.lastSyncStats.inserted} transaksi baru ditambahkan,{" "}
+                {sheetsConfig.lastSyncStats.updated} transaksi diperbarui.
+              </p>
+            ) : null}
+
+            {sheetsConfig.lastSyncError ? (
+              <p className="text-xs text-expense">
+                Error terakhir: {sheetsConfig.lastSyncError}
+              </p>
+            ) : null}
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              <button
+                type="button"
+                onClick={handleSyncSheets}
+                disabled={syncingSheets || transactions.length === 0}
+                className="btn btn-primary"
+              >
+                <RefreshCw
+                  size={18}
+                  strokeWidth={1.75}
+                  className={syncingSheets ? "animate-spin" : ""}
+                  aria-hidden="true"
+                />
+                {syncingSheets ? "Menyinkronkan..." : "Sinkronkan Sekarang"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSheetsModalOpen(true)}
+                className="btn btn-secondary"
+              >
+                <SlidersHorizontal size={18} strokeWidth={1.75} aria-hidden="true" />
+                Pengaturan Sheets
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col items-start gap-3">
+            <p className="text-xs text-ink-soft leading-relaxed">
+              Belum terhubung ke spreadsheet. Buat Google Spreadsheet baru lalu hubungkan untuk membuat
+              rekap data otomatis.
+            </p>
+            <button
+              type="button"
+              onClick={() => setSheetsModalOpen(true)}
+              className="btn btn-primary"
+            >
+              <FileSpreadsheet size={18} strokeWidth={1.75} aria-hidden="true" />
+              Hubungkan Google Sheets
+            </button>
+          </div>
+        )}
       </Section>
 
       <Section
@@ -203,6 +356,14 @@ export default function Settings({
             onLoadDemo();
             setConfirm(null);
           }}
+        />
+      ) : null}
+
+      {sheetsModalOpen ? (
+        <GoogleSheetsModal
+          onClose={() => setSheetsModalOpen(false)}
+          onConfigSaved={() => setSheetsConfig(getSheetsConfig())}
+          onNotify={onNotify}
         />
       ) : null}
     </div>

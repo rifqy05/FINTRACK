@@ -1,6 +1,6 @@
 # FinTrack: Personal Finance Tracker
 
-Website pencatatan keuangan pribadi. Catat pemasukan dan pengeluaran, pantau saldo, atur anggaran per kategori, dan lihat laporan bulanan. Aplikasi bisa dipakai langsung tanpa akun (data tersimpan di browser lewat `localStorage`), atau masuk ke akun cloud (Supabase) agar data tersinkron antar-perangkat. Tanpa konfigurasi Supabase, FinTrack tetap berjalan penuh dalam mode lokal.
+Website pencatatan keuangan pribadi. Catat pemasukan dan pengeluaran, pantau saldo, atur anggaran per kategori, dan lihat laporan bulanan. Aplikasi bisa dipakai langsung tanpa akun (data tersimpan di browser lewat `localStorage`), atau masuk ke akun cloud (Supabase) agar data tersinkron antar-perangkat. Tersedia juga ekspor/sinkronisasi satu arah ke Google Sheets. Tanpa konfigurasi Supabase, FinTrack tetap berjalan penuh dalam mode lokal.
 
 ## Instalasi dan menjalankan
 
@@ -31,11 +31,11 @@ fintrack/
 │   │   ├── Sidebar, Header, SummaryCard, EmptyState
 │   │   ├── TransactionForm, TransactionTable, CategoryBreakdown
 │   │   ├── Charts (bar dan garis), BudgetProgress, MonthPicker
-│   │   ├── AuthModal, MigrationModal
+│   │   ├── AuthModal, MigrationModal, GoogleSheetsModal
 │   │   └── Modal, ConfirmDialog, Field, Toast, navItems
 │   ├── pages/           Dashboard, Transactions, Budgets, Reports, Settings
 │   ├── services/        akses data: authService, transactionService, budgetService,
-│   │                    migrationService, supabaseClient, dataMappers
+│   │                    migrationService, googleSheetsService, supabaseClient, dataMappers
 │   ├── utils/
 │   │   ├── formatCurrency.js        format Rupiah dan persen
 │   │   ├── financeCalculations.js   SEMUA rumus (saldo, saving rate, anggaran, data grafik)
@@ -47,8 +47,9 @@ fintrack/
 │   ├── main.jsx
 │   └── index.css        tema terang/gelap dan style global
 ├── supabase/schema.sql  skema tabel, index, trigger, dan policy RLS
-├── docs/                panduan konfigurasi Supabase
-└── tests/               test rumus, validasi, CSV, backup, dan layanan cloud
+├── google-sheets/Code.gs Apps Script untuk sinkronisasi satu arah
+├── docs/                panduan konfigurasi Supabase dan Google Sheets
+└── tests/               test rumus, validasi, CSV, backup, layanan cloud, dan Google Sheets
 ```
 
 ## Cara kerja penyimpanan lokal
@@ -86,9 +87,18 @@ FinTrack mendukung autentikasi dan sinkronisasi cloud dengan Supabase (PostgreSQ
 3. Eksekusi skema database `supabase/schema.sql` di Supabase SQL Editor (sudah termasuk Row Level Security dan triggers).
 4. Panduan langkah demi langkah dapat dibaca di `docs/SUPABASE_SETUP.md`.
 
+## Integrasi Google Sheets
+
+FinTrack menyediakan ekspor dan sinkronisasi satu arah ke Google Sheets secara idempoten (tanpa duplikasi baris transaksi) menggunakan Google Apps Script Web App.
+
+1. Buat spreadsheet baru di Google Sheets.
+2. Buka **Extensions** > **Apps Script**, salin isi file `google-sheets/Code.gs`, lalu deploy sebagai **Web app** (Who has access: Anyone).
+3. Salin Web app URL ke menu **Pengaturan** di FinTrack.
+4. Panduan lengkap dan tangkapan layar tersedia di `docs/GOOGLE_SHEETS_SETUP.md`.
+
 ## Pengujian
 
-- `npm test`: unit test untuk rumus keuangan, filter, anggaran, data grafik, validasi, CSV, backup, mapper cloud, konversi UUID idempoten, dan penanganan error.
+- `npm test`: unit test untuk rumus keuangan, filter, anggaran, data grafik, validasi, CSV, backup, mapper cloud, konversi UUID idempoten, layanan Google Sheets Web App, dan penanganan error.
 - Uji end-to-end di browser (Playwright) dijalankan saat pengembangan: alur tambah/edit/hapus, validasi, filter, persistensi setelah refresh, export/import, tema, anggaran, dan tidak ada overflow horizontal di 360, 768, dan 1280 px pada mode terang dan gelap.
 
 ## Aksesibilitas
