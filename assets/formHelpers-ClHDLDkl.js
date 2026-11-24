@@ -1,0 +1,1 @@
+function e(e,t,n){if(t)return`${e}-error`;if(n)return`${e}-hint`}export{e as t};
