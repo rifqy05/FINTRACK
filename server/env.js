@@ -36,6 +36,12 @@ export function readServerEnv(env = process.env) {
   const aiApiKey = text(env.AI_PROVIDER_API_KEY);
   const aiModel = text(env.AI_MODEL);
 
+  const rawOrigins = text(env.AI_ALLOWED_ORIGIN) || DEFAULTS.allowedOrigin;
+  const allowedOrigins = rawOrigins
+    .split(",")
+    .map((item) => item.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
+
   return {
     port: positiveInt(env.PORT, DEFAULTS.port),
     supabaseUrl,
@@ -53,7 +59,8 @@ export function readServerEnv(env = process.env) {
     rateLimitWindowMs: positiveInt(env.AI_RATE_LIMIT_WINDOW_MS, DEFAULTS.rateLimitWindowMs),
     dataMonthsBack: positiveInt(env.AI_DATA_MONTHS_BACK, DEFAULTS.dataMonthsBack),
     dataRowLimit: positiveInt(env.AI_DATA_ROW_LIMIT, DEFAULTS.dataRowLimit),
-    allowedOrigin: text(env.AI_ALLOWED_ORIGIN) || DEFAULTS.allowedOrigin,
+    allowedOrigin: allowedOrigins[0] || DEFAULTS.allowedOrigin,
+    allowedOrigins: allowedOrigins.length > 0 ? allowedOrigins : [DEFAULTS.allowedOrigin],
   };
 }
 

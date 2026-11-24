@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T10:47:00+07:00",
+  "title": "Design System: FinTrack",
+  "extensions": {
+    "colorMeta": {
+      "obsidian-canvas": {
+        "role": "neutral",
+        "displayName": "Obsidian Canvas",
+        "canonical": "#09090b",
+        "tonalRamp": ["#050506", "#09090b", "#121214", "#1d1d21", "#34343a", "#66666e", "#a4a4ad", "#ededf0"]
+      },
+      "obsidian-rail": {
+        "role": "neutral",
+        "displayName": "Obsidian Rail",
+        "canonical": "#0d0d0f",
+        "tonalRamp": ["#070708", "#0d0d0f", "#161619", "#232327", "#3a3a40", "#6c6c75", "#ababb3", "#efeff2"]
+      },
+      "obsidian-surface": {
+        "role": "neutral",
+        "displayName": "Obsidian Surface",
+        "canonical": "#121214",
+        "tonalRamp": ["#0a0a0c", "#121214", "#1b1b1e", "#29292e", "#43434a", "#75757e", "#b3b3ba", "#f1f1f4"]
+      },
+      "obsidian-hero": {
+        "role": "neutral",
+        "displayName": "Obsidian Hero Deck",
+        "canonical": "#18181b",
+        "tonalRamp": ["#0e0e10", "#18181b", "#222226", "#34343a", "#52525b", "#83838e", "#bdbdc6", "#f4f4f6"]
+      },
+      "obsidian-surface-elevated": {
+        "role": "neutral",
+        "displayName": "Carbon Elevated",
+        "canonical": "#1a1a1d",
+        "tonalRamp": ["#101012", "#1a1a1d", "#26262b", "#393940", "#585862", "#898994", "#c2c2ca", "#f5f5f7"]
+      },
+      "obsidian-active": {
+        "role": "neutral",
+        "displayName": "Carbon Active",
+        "canonical": "#242428",
+        "tonalRamp": ["#131316", "#242428", "#34343a", "#4a4a52", "#6b6b75", "#9999a3", "#cbcbd2", "#f6f6f8"]
+      },
+      "obsidian-hairline": {
+        "role": "neutral",
+        "displayName": "Stone Ash Hairline",
+        "canonical": "#27272a",
+        "tonalRamp": ["#141416", "#27272a", "#3a3a3f", "#525258", "#74747d", "#a1a1aa", "#d0d0d6", "#f7f7f9"]
+      },
+      "obsidian-hairline-strong": {
+        "role": "neutral",
+        "displayName": "Stone Ash Strong Hairline",
+        "canonical": "#3a3a3f",
+        "tonalRamp": ["#1b1b1e", "#3a3a3f", "#52525a", "#6e6e77", "#8f8f99", "#b5b5be", "#dadadf", "#f8f8fa"]
+      },
+      "ivory-action": {
+        "role": "primary",
+        "displayName": "Warm Ivory Action",
+        "canonical": "#f2f1ec",
+        "tonalRamp": ["#24231f", "#45433c", "#6c695f", "#969386", "#bdbab0", "#dbd9d0", "#f2f1ec", "#fafaf7"]
+      },
+      "ivory-ink": {
+        "role": "neutral",
+        "displayName": "Ivory Ink",
+        "canonical": "#f4f4f2",
+        "tonalRamp": ["#222220", "#42423e", "#696963", "#94948d", "#bdbdb6", "#deded9", "#f4f4f2", "#fcfcfb"]
+      },
+      "ash-ink-soft": {
+        "role": "neutral",
+        "displayName": "Mineral Ash Secondary Ink",
+        "canonical": "#9e9d97",
+        "tonalRamp": ["#21211e", "#3d3c39", "#5d5c57", "#7e7d77", "#9e9d97", "#bfbeb8", "#dfded9", "#f6f6f3"]
+      },
+      "stone-canvas": {
+        "role": "neutral",
+        "displayName": "Warm Architectural Stone",
+        "canonical": "#f3f3ef",
+        "tonalRamp": ["#252521", "#474740", "#6e6e64", "#98988c", "#c0c0b5", "#deded5", "#f3f3ef", "#fafaf8"]
+      },
+      "stone-paper": {
+        "role": "neutral",
+        "displayName": "Stone Paper",
+        "canonical": "#fcfbf9",
+        "tonalRamp": ["#262522", "#494742", "#727068", "#9d9a91", "#c7c4bb", "#e5e3dc", "#f5f4f0", "#fcfbf9"]
+      },
+      "stone-surface-muted": {
+        "role": "neutral",
+        "displayName": "Muted Stone Well",
+        "canonical": "#ecebe5",
+        "tonalRamp": ["#24231e", "#46443c", "#6d6b60", "#979487", "#bfbcb0", "#dcdad0", "#ecebe5", "#f9f9f6"]
+      },
+      "stone-hairline": {
+        "role": "neutral",
+        "displayName": "Stone Hairline",
+        "canonical": "#dfddd4",
+        "tonalRamp": ["#24231d", "#454339", "#6c695b", "#969282", "#bebaa9", "#dfddd4", "#efeee9", "#faf9f6"]
+      },
+      "carbon-action": {
+        "role": "primary",
+        "displayName": "Deep Carbon Action",
+        "canonical": "#111113",
+        "tonalRamp": ["#080809", "#111113", "#1c1c20", "#2f2f35", "#4c4c54", "#7d7d87", "#b7b7bf", "#f2f2f5"]
+      },
+      "carbon-ink-soft": {
+        "role": "neutral",
+        "displayName": "Carbon Muted Ink",
+        "canonical": "#575652",
+        "tonalRamp": ["#1d1d1b", "#393835", "#575652", "#777671", "#989791", "#bab9b3", "#dcdbd6", "#f5f5f2"]
+      },
+      "emerald-flow-dark": {
+        "role": "secondary",
+        "displayName": "Emerald Flow (Dark)",
+        "canonical": "#2dd4bf",
+        "tonalRamp": ["#072421", "#0b3d37", "#0f5c53", "#128073", "#17a897", "#2dd4bf", "#7eead9", "#d4faf3"]
+      },
+      "emerald-flow-light": {
+        "role": "secondary",
+        "displayName": "Emerald Flow (Light)",
+        "canonical": "#046c4e",
+        "tonalRamp": ["#032118", "#043c2b", "#04573e", "#046c4e", "#0c8f68", "#2ab38a", "#7ad8b9", "#d8f5eb"]
+      },
+      "rose-outflow-dark": {
+        "role": "secondary",
+        "displayName": "Rose Outflow (Dark)",
+        "canonical": "#fb7185",
+        "tonalRamp": ["#2e0d14", "#541422", "#821c33", "#b42747", "#df4464", "#fb7185", "#fda4b1", "#ffe2e7"]
+      },
+      "rose-outflow-light": {
+        "role": "secondary",
+        "displayName": "Rose Outflow (Light)",
+        "canonical": "#be123c",
+        "tonalRamp": ["#330611", "#5c091e", "#8c0e2d", "#be123c", "#df2f58", "#f46382", "#faa3b5", "#ffe1e8"]
+      },
+      "amber-caution-dark": {
+        "role": "secondary",
+        "displayName": "Amber Caution (Dark)",
+        "canonical": "#fbbf24",
+        "tonalRamp": ["#2b1e05", "#4f3708", "#7d580d", "#b07d12", "#df9e18", "#fbbf24", "#fdd874", "#fef3c7"]
+      },
+      "amber-caution-light": {
+        "role": "secondary",
+        "displayName": "Amber Caution (Light)",
+        "canonical": "#92400e",
+        "tonalRamp": ["#2e1304", "#542408", "#73320b", "#92400e", "#ba5c1a", "#de843b", "#f3b87e", "#fef0dc"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Net balance headline inside the Hero Cashflow Deck." },
+      "headline": { "displayName": "Headline", "purpose": "Primary route titles in the sticky utility header." },
+      "title": { "displayName": "Title", "purpose": "Panel titles, settings ledger rows, and modal dialog titles." },
+      "body": { "displayName": "Body", "purpose": "Ledger descriptions, form inputs, and helper copy." },
+      "label": { "displayName": "Label", "purpose": "Table column headers, chart ticks, status badges, and metric labels." },
+      "mono": { "displayName": "Mono", "purpose": "Keyboard shortcut hints and technical setup commands." }
+    },
+    "shadows": [
+      {
+        "name": "hero-chamfer",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.07)",
+        "purpose": "Subtle architectural top-edge highlight on elevated obsidian Hero Command Decks."
+      },
+      {
+        "name": "floating-control",
+        "value": "0 4px 12px rgb(0 0 0 / 0.25)",
+        "purpose": "Mobile thumb-zone FAB and chart hover tooltips."
+      },
+      {
+        "name": "overlay-surface",
+        "value": "0 20px 25px -5px rgb(0 0 0 / 0.35), 0 8px 10px -6px rgb(0 0 0 / 0.25)",
+        "purpose": "Native dialog modals and floating toast alerts."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Authored entrance curve for route rise-in (200ms) and allocation ribbon reveal (480ms)."
+      },
+      {
+        "name": "duration-micro",
+        "value": "150ms",
+        "purpose": "Button press, border hover, and segmented tab transitions."
+      },
+      {
+        "name": "duration-meter",
+        "value": "300ms",
+        "purpose": "Smooth width updates on proportional allocation and budget progress tracks."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "workspace-max", "value": "1600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-contrast warm ivory primary CTA with optional keyboard shortcut keycap.",
+      "html": "<button type=\"button\" class=\"ds-btn-primary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg><span>Tambah Transaksi</span><kbd class=\"ds-kbd\">N</kbd></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border: none; border-radius: 12px; background: var(--brand, #f2f1ec); color: var(--brand-ink, #09090b); font-family: 'Geist Variable', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 150ms ease, transform 150ms ease; } .ds-btn-primary:hover { opacity: 0.9; } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; } .ds-kbd { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 4px; border: 1px solid rgb(9 9 11 / 0.22); font-family: 'Geist Mono Variable', ui-monospace, monospace; font-size: 11px; line-height: 1; opacity: 0.78; }"
+    },
+    {
+      "name": "Secondary Hairline Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Matte surface button framed by a crisp 1px hairline for supporting actions like CSV export and filter reset.",
+      "html": "<button type=\"button\" class=\"ds-btn-secondary\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"/><polyline points=\"14 2 14 8 20 8\"/><line x1=\"8\" y1=\"13\" x2=\"16\" y2=\"13\"/><line x1=\"8\" y1=\"17\" x2=\"16\" y2=\"17\"/></svg><span>Ekspor CSV</span></button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--line, #27272a); border-radius: 12px; background: var(--surface, #121214); color: var(--ink, #f4f4f2); font-family: 'Geist Variable', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease; } .ds-btn-secondary:hover { background: var(--surface-2, #1a1a1d); border-color: var(--line-strong, #3a3a3f); } .ds-btn-secondary:active { transform: translateY(1px); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; }"
+    },
+    {
+      "name": "Danger Action Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Rose-coral destructive action button reserved strictly for irreversible clear/delete confirmations.",
+      "html": "<button type=\"button\" class=\"ds-btn-danger\">Hapus seluruh data</button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border: none; border-radius: 12px; background: var(--expense, #fb7185); color: var(--expense-ink, #1c070e); font-family: 'Geist Variable', system-ui, sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 150ms ease, transform 150ms ease; } .ds-btn-danger:hover { opacity: 0.9; } .ds-btn-danger:active { transform: translateY(1px); } .ds-btn-danger:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; }"
+    },
+    {
+      "name": "Segmented Period Switch",
+      "kind": "chip",
+      "refersTo": "card-surface",
+      "description": "Header period switcher using lifted carbon active surface so it never competes visually with the primary CTA.",
+      "html": "<div role=\"group\" aria-label=\"Periode ringkasan\" class=\"ds-seg\"><button type=\"button\" aria-pressed=\"true\" class=\"ds-seg-btn ds-seg-active\">Bulan ini</button><button type=\"button\" aria-pressed=\"false\" class=\"ds-seg-btn\">Semua data</button></div>",
+      "css": ".ds-seg { display: inline-flex; padding: 4px; border-radius: 12px; border: 1px solid var(--line, #27272a); background: var(--surface, #121214); font-family: 'Geist Variable', system-ui, sans-serif; } .ds-seg-btn { min-height: 36px; padding: 0 14px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--ink-soft, #9e9d97); font-size: 12px; font-weight: 500; cursor: pointer; transition: background-color 150ms ease, color 150ms ease; } .ds-seg-btn:hover { background: var(--surface-2, #1a1a1d); color: var(--ink, #f4f4f2); } .ds-seg-active { background: var(--surface-3, #242428); color: var(--ink, #f4f4f2); border-color: var(--line-strong, #3a3a3f); font-weight: 600; } .ds-seg-btn:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; }"
+    },
+    {
+      "name": "Rupiah Currency Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Single-line Rupiah input with inline Rp prefix, tabular numerals, and live dot thousand separators.",
+      "html": "<div class=\"ds-input-wrap\"><span class=\"ds-input-prefix\" aria-hidden=\"true\">Rp</span><input type=\"text\" inputmode=\"numeric\" value=\"35.000\" aria-label=\"Nominal Rupiah\" class=\"ds-input\" /></div>",
+      "css": ".ds-input-wrap { position: relative; width: 240px; font-family: 'Geist Variable', system-ui, sans-serif; } .ds-input-prefix { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 500; color: var(--ink-soft, #9e9d97); pointer-events: none; } .ds-input { width: 100%; min-height: 44px; padding: 0 14px 0 40px; border-radius: 12px; border: 1px solid var(--line, #27272a); background: var(--surface, #121214); color: var(--ink, #f4f4f2); font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; caret-color: var(--ink, #f4f4f2); transition: border-color 150ms ease; } .ds-input:hover { border-color: var(--line-strong, #3a3a3f); } .ds-input:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; }"
+    },
+    {
+      "name": "Obsidian Rail Nav Item",
+      "kind": "nav",
+      "refersTo": "card-surface",
+      "description": "Monochrome desktop rail link with full hairline border active state and zero side-stripe.",
+      "html": "<nav class=\"ds-rail\" aria-label=\"Contoh navigasi\"><button type=\"button\" aria-current=\"page\" class=\"ds-nav-item ds-nav-active\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg><span>Dashboard</span></button><button type=\"button\" class=\"ds-nav-item\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" aria-hidden=\"true\"><path d=\"M8 3L4 7l4 4\"/><path d=\"M4 7h16\"/><path d=\"M16 21l4-4-4-4\"/><path d=\"M20 17H4\"/></svg><span>Transaksi</span></button></nav>",
+      "css": ".ds-rail { display: flex; flex-direction: column; gap: 4px; width: 224px; padding: 12px; border-radius: 16px; background: var(--rail, #0d0d0f); border: 1px solid var(--rail-line, #232327); font-family: 'Geist Variable', system-ui, sans-serif; } .ds-nav-item { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: var(--rail-soft, #9e9d97); font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color 150ms ease, color 150ms ease; } .ds-nav-item:hover { background: var(--rail-surface, #161619); color: var(--rail-ink, #f4f4f2); } .ds-nav-active { background: var(--rail-active, #212125); color: var(--rail-ink, #f4f4f2); border-color: var(--rail-line, #232327); } .ds-nav-item:focus-visible { outline: 2px solid var(--focus, #f2f1ec); outline-offset: 2px; }"
+    },
+    {
+      "name": "Hero Cashflow Command Deck",
+      "kind": "card",
+      "refersTo": "hero-deck",
+      "description": "Elevated obsidian focal balance card with top chamfer highlight, proportional spent-vs-saved ribbon, and hairline metric strip.",
+      "html": "<section class=\"ds-hero\"><div class=\"ds-hero-head\"><span>Saldo bersih &middot; November 2026</span><span class=\"ds-pill\">9 transaksi</span></div><p class=\"ds-hero-val\">Rp 2.296.000</p><div class=\"ds-ribbon\" aria-hidden=\"true\"><span class=\"ds-ribbon-exp\" style=\"width:44%\"></span><span class=\"ds-ribbon-inc\" style=\"width:56%\"></span></div><div class=\"ds-hero-grid\"><div><span class=\"ds-meta\">Total pemasukan</span><strong class=\"ds-num\">Rp 4.100.000</strong></div><div><span class=\"ds-meta\">Total pengeluaran</span><strong class=\"ds-num\">Rp 1.804.000</strong></div><div><span class=\"ds-meta\">Rasio tabungan</span><strong class=\"ds-num\">56,0%</strong></div></div></section>",
+      "css": ".ds-hero { max-width: 560px; padding: 24px; border-radius: 16px; border: 1px solid var(--hero-line, #34343a); background: linear-gradient(180deg, rgb(255 255 255 / 0.045) 0%, transparent 42%), var(--hero, #18181b); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07); color: var(--hero-ink, #faf9f5); font-family: 'Geist Variable', system-ui, sans-serif; } .ds-hero-head { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--hero-soft, #a4a39c); } .ds-pill { padding: 2px 10px; border-radius: 9999px; border: 1px solid var(--hero-line, #34343a); background: var(--hero-surface, #222226); font-size: 12px; } .ds-hero-val { margin: 10px 0 18px; font-size: 36px; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; } .ds-ribbon { display: flex; height: 10px; overflow: hidden; border-radius: 9999px; background: var(--hero-surface, #222226); border: 1px solid var(--hero-line, #34343a); } .ds-ribbon-exp { background: var(--expense, #fb7185); } .ds-ribbon-inc { background: var(--income, #2dd4bf); } .ds-hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--hero-line, #34343a); } .ds-meta { display: block; font-size: 12px; color: var(--hero-soft, #a4a39c); } .ds-num { display: block; margin-top: 4px; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Calendar-Day Budget Pace Bar",
+      "kind": "custom",
+      "refersTo": "card-surface",
+      "description": "Monthly category budget bar featuring a crisp vertical day-of-month pace marker for immediate spend-rate evaluation.",
+      "html": "<div class=\"ds-budget\"><div class=\"ds-budget-head\"><strong class=\"ds-budget-name\">Internet</strong><span class=\"ds-warn-badge\">Hampir batas</span></div><div class=\"ds-track\"><div class=\"ds-fill\" style=\"width:85%\"></div><span class=\"ds-pace\" style=\"left:80%\" title=\"Hari ke-24 dari 30\"></span></div><div class=\"ds-budget-foot\"><span><strong>Rp 85.000</strong> / Rp 100.000 (85%)</span><span>Sisa Rp 15.000</span></div></div>",
+      "css": ".ds-budget { max-width: 440px; padding: 16px; border-radius: 16px; border: 1px solid var(--line, #27272a); background: var(--surface, #121214); color: var(--ink, #f4f4f2); font-family: 'Geist Variable', system-ui, sans-serif; } .ds-budget-head { display: flex; align-items: center; gap: 8px; } .ds-budget-name { font-size: 14px; font-weight: 600; } .ds-warn-badge { padding: 2px 10px; border-radius: 9999px; background: var(--warn-soft, #29200d); color: var(--warn, #fbbf24); font-size: 12px; font-weight: 500; } .ds-track { position: relative; height: 10px; margin: 12px 0 8px; border-radius: 9999px; background: var(--surface-2, #1a1a1d); } .ds-fill { height: 100%; border-radius: 9999px; background: var(--warn-bar, #f59e0b); } .ds-pace { position: absolute; top: -2px; bottom: -2px; width: 2px; border-radius: 9999px; background: var(--ink, #f4f4f2); opacity: 0.78; } .ds-budget-foot { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-soft, #9e9d97); font-variant-numeric: tabular-nums; } .ds-budget-foot strong { color: var(--ink, #f4f4f2); font-weight: 500; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Obsidian & Stone Ledger",
+    "overview": "FinTrack treats personal Rupiah bookkeeping as a quiet executive instrument rather than a playful fintech feed. In dark mode, the interface settles into true matte volcanic obsidian and stepped mineral charcoal surfaces separated by razor-thin stone-ash hairlines, anchoring every screen with warm ivory primary controls and zero midnight-blue SaaS tint. In light mode, the workspace opens onto warm architectural stone paper while keeping a committed obsidian left navigation rail and an obsidian Cashflow Command Deck, giving both themes the same unmistakable editorial composure.\n\nInformation density is deliberate and scannable at a glance. Within two seconds of opening the workspace, the eye moves from the stepped Hero Cashflow Deck (headline net balance, proportional income-versus-expense allocation ribbon, and hairline-divided supporting metrics) to the inline daily capture card, analytical charts, calendar-paced budget bars, and modern banking-ledger rows. Chromatic saturation is strictly rationed: structural chrome stays monochrome obsidian, carbon, stone, and ivory so emerald-teal and rose-coral register instantaneously as money coming in or going out.\n\nWe explicitly reject generic midnight-blue Tailwind slate templates, glowing indigo/periwinkle SaaS buttons, floating ghost-card shadows, side-striped rounded boxes, repetitive equal-size icon-card grids, and decorative glass blur.",
+    "keyCharacteristics": [
+      "Matte volcanic obsidian dark theme (#09090b canvas, #121214 cards, #18181b focal deck) paired with warm architectural stone light theme (#f3f3ef canvas, #fcfbf9 paper) and a persistent obsidian rail (#0d0d0f dark / #111113 light).",
+      "Monochrome high-contrast primary actions (warm ivory #f2f1ec in dark mode; deep carbon #111113 in light mode) so one CTA clearly leads each view.",
+      "Strict semantic color rationing: emerald-teal and rose-coral appear exclusively on financial flows, balances, chart series, and budget/validation thresholds.",
+      "Self-hosted Geist Variable and Geist Mono Variable with strict tabular numerals (tabular-nums) on every Rupiah amount, percentage, date, and pagination count.",
+      "Signature financial telemetry: proportional allocation ribbon, inline Catat cepat entry card, calendar-day vertical budget pace markers, and category-icon banking ledger rows."
+    ],
+    "rules": [
+      {
+        "name": "The Money-Flow Only Rule",
+        "body": "Emerald-teal and rose-coral are reserved strictly for money movement, financial trend series, budget status thresholds, and destructive/error feedback. Never apply emerald-teal to brand logos, navigation icons, theme switches, or general UI chrome.",
+        "section": "colors"
+      },
+      {
+        "name": "The Zero Blue-Slate Rule",
+        "body": "Dark neutrals stay neutral-mineral (#09090b, #121214, #18181b, #27272a, #9e9d97) without blue-channel tinting, ensuring FinTrack never regresses into a generic midnight-blue SaaS dashboard.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Numerals Rule",
+        "body": "Every Rupiah figure, percentage, date, axis value, and pagination counter MUST carry tabular-nums so vertical ledger columns and live totals align digit-for-digit without horizontal jitter.",
+        "section": "typography"
+      },
+      {
+        "name": "The No-Eyebrow Rule",
+        "body": "Never place uppercase kickers or micro-eyebrows above section headings; let balanced heading scale and spacing establish hierarchy directly.",
+        "section": "typography"
+      },
+      {
+        "name": "The Single Elevation Declaration Rule",
+        "body": "Resting cards declare their boundary once via a 1px hairline border and stepped matte fill—never pair a 1px border with a wide soft ambient shadow on static cards.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Authored Motion Moment Rule",
+        "body": "Keep page transitions swift (200ms rise-in with exponential ease-out cubic-bezier(0.16, 1, 0.3, 1)) and reserve the primary authored motion moment for the Hero allocation ribbon (480ms left-anchored ribbon-reveal). All motion collapses to 0.01ms under prefers-reduced-motion: reduce.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep dark surfaces in the true matte obsidian-to-carbon mineral spectrum (#09090b -> #121214 -> #18181b -> #242428) and light surfaces in warm stone (#f3f3ef -> #fcfbf9) anchored by a committed obsidian rail (#111113).",
+      "Do restrict emerald-teal and rose-coral strictly to financial direction, charts, budget health, and error/destructive feedback.",
+      "Do apply tabular-nums to every Rupiah amount, percentage, date, and metric across all routes, and format currency inputs with live Indonesian dot separators (35.000).",
+      "Do label synthetic demonstration datasets visibly (Data contoh badge) whenever demo-* rows are loaded.",
+      "Do keep every interactive target at least 44x44px, pair color status with icons and Bahasa Indonesia labels, and theme browser surfaces (::selection, caret-color, scrollbars, :focus-visible).",
+      "Do use hairline-divided architectural ledger rows (divide-y divide-line) for preference/settings screens instead of equal-size icon-card grids."
+    ],
+    "donts": [
+      "Don't introduce midnight-blue slate tints (#0f172a, #1e293b) or generic indigo/periwinkle buttons (#6366f1, #818cf8) anywhere in dark or light mode.",
+      "Don't use emerald-teal on non-financial UI chrome (logos, navigation icons, theme toggles, or neutral sync badges).",
+      "Don't place side-stripe bars down one edge of rounded cards or navigation items, or stack cards inside cards.",
+      "Don't add eyebrow/kicker micro-labels above headings, gradient text, decorative backdrop blur on resting cards, or hard offset shadows.",
+      "Don't lower-case Indonesian month names inside prose (periode November 2026, never periode november 2026) or drop uniform tick cadences on 12-month charts."
+    ]
+  }
+}

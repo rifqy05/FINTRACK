@@ -6,79 +6,119 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  Token desain. Satu aksen (navy/biru), hijau hanya untuk pemasukan, coral hanya untuk pengeluaran.
-  Aturan bentuk: kontrol (tombol, input) rounded-lg, wadah (kartu, dialog) rounded-2xl, lencana rounded-full.
+  Obsidian & Stone Ledger — Sistem warna & permukaan FinTrack.
+  Light: kanvas batu hangat (#f3f3ef) + kertas (#fcfbf9) + rail obsidian (#111113).
+  Dark: obsidian matte (#09090b) + karbon bertingkat (#121214, #1a1a1d) + dek fokus (#18181b) + CTA gading (#f2f1ec).
+  Warna semantik emerald-teal & rose-coral hanya dipakai untuk pergerakan uang dan status finansial.
 */
 :root {
-  --canvas: #f2f4f8;
-  --surface: #fcfcfe;
-  --surface-2: #edf0f6;
-  --line: #dce1eb;
-  --ink: #0f1b33;
-  --ink-soft: #55627a;
-  --brand: #1b2f5e;
-  --brand-ink: #f4f7ff;
-  --brand-soft: #e3e9f7;
-  --hero: #1b2f5e;
-  --hero-ink: #f4f7ff;
-  --hero-soft: #b9c6e6;
-  --income: #047857;
-  --income-soft: #ddf3ea;
-  --expense: #c2372d;
-  --expense-soft: #fbe4e1;
-  --expense-ink: #fff8f7;
-  --warn: #8a5a00;
-  --warn-soft: #fbefd2;
-  --warn-bar: #b87900;
-  --focus: #3b63d9;
-  --shadow: 0 1px 2px rgb(15 27 51 / 0.06), 0 4px 16px rgb(15 27 51 / 0.04);
+  --canvas: #f3f3ef;
+  --surface: #fcfbf9;
+  --surface-2: #ecebe5;
+  --surface-3: #e2e0d8;
+  --line: #dfddd4;
+  --line-strong: #c5c2b7;
+  --ink: #111113;
+  --ink-soft: #575652;
+  --ink-faint: #787670;
 
-  --cat-1: #1b2f5e;
-  --cat-2: #3b63d9;
-  --cat-3: #62a8d8;
-  --cat-4: #1a8f80;
-  --cat-5: #8bc48a;
-  --cat-6: #e0a93b;
-  --cat-7: #e2725b;
-  --cat-8: #b5483f;
-  --cat-9: #6b7a99;
-  --cat-10: #a9b4c9;
+  --rail: #111113;
+  --rail-surface: #1a1a1d;
+  --rail-active: #242428;
+  --rail-line: #27272a;
+  --rail-ink: #f4f4f2;
+  --rail-soft: #9e9d97;
+
+  --brand: #111113;
+  --brand-ink: #faf9f5;
+  --brand-soft: #e7e6df;
+
+  --accent: #0f766e;
+  --accent-soft: #dff2ef;
+
+  --hero: #111113;
+  --hero-surface: #1b1b1e;
+  --hero-line: #2c2c31;
+  --hero-ink: #faf9f5;
+  --hero-soft: #a4a39c;
+
+  --income: #046c4e;
+  --income-soft: #dcf4ec;
+  --expense: #be123c;
+  --expense-soft: #fce4ea;
+  --expense-ink: #fff7f9;
+  --warn: #92400e;
+  --warn-soft: #fef3c7;
+  --warn-bar: #d97706;
+  --focus: #111113;
+  --selection-bg: #dfddd4;
+  --shadow: 0 1px 2px rgb(17 17 19 / 0.05);
+
+  --cat-1: #9a6724;
+  --cat-2: #3b638c;
+  --cat-3: #8c4a6b;
+  --cat-4: #b8563a;
+  --cat-5: #5e5a96;
+  --cat-6: #3e7a6d;
+  --cat-7: #a87528;
+  --cat-8: #3a7582;
+  --cat-9: #6e6a63;
+  --cat-10: #858077;
 }
 
 .dark {
-  --canvas: #0a101c;
-  --surface: #111a2c;
-  --surface-2: #18233a;
-  --line: #243251;
-  --ink: #e7ecf6;
-  --ink-soft: #98a5bf;
-  --brand: #8faeff;
-  --brand-ink: #0a101c;
-  --brand-soft: #1b2b52;
-  --hero: #1c2d57;
-  --hero-ink: #eef2fd;
-  --hero-soft: #a9b8dc;
-  --income: #34d399;
-  --income-soft: #0f2b24;
-  --expense: #ff8a7a;
-  --expense-soft: #33191a;
-  --expense-ink: #2a0b08;
-  --warn: #f5c451;
-  --warn-soft: #2b2210;
-  --warn-bar: #f5c451;
-  --focus: #8faeff;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  --canvas: #09090b;
+  --surface: #121214;
+  --surface-2: #1a1a1d;
+  --surface-3: #242428;
+  --line: #27272a;
+  --line-strong: #3a3a3f;
+  --ink: #f4f4f2;
+  --ink-soft: #9e9d97;
+  --ink-faint: #75746e;
 
-  --cat-1: #9db4f5;
-  --cat-2: #5c86f0;
-  --cat-3: #7cc3ec;
-  --cat-4: #3dc2ae;
-  --cat-5: #a6d9a4;
-  --cat-6: #f0c260;
-  --cat-7: #f2917b;
-  --cat-8: #d9685d;
-  --cat-9: #8e9bb8;
-  --cat-10: #5e6c8a;
+  --rail: #0d0d0f;
+  --rail-surface: #161619;
+  --rail-active: #212125;
+  --rail-line: #232327;
+  --rail-ink: #f4f4f2;
+  --rail-soft: #9e9d97;
+
+  --brand: #f2f1ec;
+  --brand-ink: #09090b;
+  --brand-soft: #212125;
+
+  --accent: #2dd4bf;
+  --accent-soft: #0f2926;
+
+  --hero: #18181b;
+  --hero-surface: #222226;
+  --hero-line: #34343a;
+  --hero-ink: #faf9f5;
+  --hero-soft: #a4a39c;
+
+  --income: #2dd4bf;
+  --income-soft: #0f2926;
+  --expense: #fb7185;
+  --expense-soft: #2e151d;
+  --expense-ink: #1c070e;
+  --warn: #fbbf24;
+  --warn-soft: #29200d;
+  --warn-bar: #f59e0b;
+  --focus: #f2f1ec;
+  --selection-bg: #2c2c31;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+
+  --cat-1: #d4a359;
+  --cat-2: #76a2cc;
+  --cat-3: #c484a5;
+  --cat-4: #df8468;
+  --cat-5: #9995cc;
+  --cat-6: #74b3a4;
+  --cat-7: #cfa660;
+  --cat-8: #6cb0be;
+  --cat-9: #a39f97;
+  --cat-10: #807d75;
   color-scheme: dark;
 }
 
@@ -88,13 +128,26 @@
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rail: var(--rail);
+  --color-rail-surface: var(--rail-surface);
+  --color-rail-active: var(--rail-active);
+  --color-rail-line: var(--rail-line);
+  --color-rail-ink: var(--rail-ink);
+  --color-rail-soft: var(--rail-soft);
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
   --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-hero: var(--hero);
+  --color-hero-surface: var(--hero-surface);
+  --color-hero-line: var(--hero-line);
   --color-hero-ink: var(--hero-ink);
   --color-hero-soft: var(--hero-soft);
   --color-income: var(--income);
@@ -114,10 +167,29 @@
     color: var(--ink);
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--line-strong) transparent;
+    scrollbar-width: thin;
   }
   body {
     min-height: 100dvh;
     overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--ink);
+  }
+  input,
+  textarea {
+    caret-color: var(--ink);
+  }
+  a,
+  button {
+    text-underline-offset: 3px;
   }
   :focus-visible {
     outline: 2px solid var(--focus);
@@ -140,34 +212,58 @@
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-line bg-surface shadow-card;
+    @apply rounded-2xl border border-line bg-surface;
+  }
+
+  .hero-deck {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.045) 0%, transparent 42%),
+      var(--hero);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
+    @apply rounded-2xl border border-hero-line text-hero-ink;
   }
 
   .btn {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium whitespace-nowrap;
-    @apply transition-[background-color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium whitespace-nowrap;
+    @apply transition-[background-color,border-color,color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-45;
   }
   .btn-primary {
     @apply bg-brand text-brand-ink hover:bg-brand/90;
   }
   .btn-secondary {
-    @apply border border-line bg-surface text-ink hover:bg-surface-2;
+    @apply border border-line bg-surface text-ink hover:border-line-strong hover:bg-surface-2;
   }
   .btn-danger {
     @apply bg-expense text-expense-ink hover:bg-expense/90;
   }
   .btn-icon {
-    @apply inline-flex size-11 items-center justify-center rounded-lg text-ink-soft transition-colors duration-150 hover:bg-surface-2 hover:text-ink;
+    @apply inline-flex size-11 items-center justify-center rounded-xl text-ink-soft transition-colors duration-150 hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-40;
   }
 
   .input {
-    @apply min-h-11 w-full rounded-lg border border-line bg-surface px-3 text-sm text-ink placeholder:text-ink-soft;
-    @apply transition-colors duration-150 hover:border-ink-soft/60 aria-[invalid=true]:border-expense;
+    @apply min-h-11 w-full rounded-xl border border-line bg-surface px-3.5 text-sm text-ink placeholder:text-ink-soft;
+    @apply transition-colors duration-150 hover:border-line-strong aria-[invalid=true]:border-expense;
   }
 
   .badge {
-    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex w-fit items-center gap-1.5 rounded-full border border-transparent px-2.5 py-0.5 text-xs font-medium whitespace-nowrap;
   }
+
+  .kbd-hint {
+    @apply hidden rounded border border-current/20 px-1.5 py-0.5 font-mono text-[11px] leading-none opacity-75 sm:inline-flex;
+  }
+
+  .money-mask {
+    transition: filter 180ms ease;
+  }
+}
+
+/* Mode privasi: menyamarkan nominal Rupiah dan nilai grafik di tempat umum tanpa menggeser tata letak. */
+html[data-privacy="true"] .money-mask,
+html[data-privacy="true"] .recharts-yAxis,
+html[data-privacy="true"] .recharts-tooltip-wrapper {
+  filter: blur(7px);
+  user-select: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -192,7 +288,20 @@
   }
 }
 
-/* Dipakai saat berpindah halaman dan saat toast muncul (umpan balik bahwa sesuatu berubah). */
+@keyframes ribbon-reveal {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.ribbon-reveal {
+  transform-origin: left center;
+  animation: ribbon-reveal 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .rise-in {
-  animation: rise-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: rise-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }

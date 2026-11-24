@@ -297,6 +297,13 @@ describe("penanganan kegagalan", () => {
     expect(callsTo("/chat/completions")).toHaveLength(0);
   });
 
+  it("mendukung beberapa origin dipisah koma pada konfigurasi server", () => {
+    const multi = readServerEnv({
+      AI_ALLOWED_ORIGIN: "http://localhost:5173, https://user.github.io/",
+    });
+    expect(multi.allowedOrigins).toEqual(["http://localhost:5173", "https://user.github.io"]);
+  });
+
   it("memberi pesan konfigurasi yang jelas bila backend belum diisi Supabase", async () => {
     const config = readServerEnv({});
     const { run } = ask();

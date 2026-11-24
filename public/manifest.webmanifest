@@ -1,0 +1,21 @@
+{
+  "name": "FinTrack - Catatan Keuangan Pribadi",
+  "short_name": "FinTrack",
+  "description": "Catat pemasukan, pengeluaran, anggaran, dan laporan keuangan pribadi secara lokal atau tersinkron di cloud.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "lang": "id",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

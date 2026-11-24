@@ -1,7 +1,7 @@
 // Baca dan tulis localStorage dengan aman. Data divalidasi saat dibaca, jadi data
 // yang rusak atau diedit manual tidak membuat aplikasi error.
 
-import { STORAGE_KEYS } from "./constants.js";
+import { PAYMENT_METHODS, STORAGE_KEYS } from "./constants.js";
 import { getBudgetError, getTransactionError, normalizeBudget, normalizeTransaction } from "./validation.js";
 
 function readJson(key) {
@@ -50,16 +50,48 @@ export function loadBudgets() {
     .map(normalizeBudget);
 }
 
-// Tema: "light" atau "dark". Tanpa pilihan tersimpan, ikuti pengaturan sistem.
+// Tema: "light", "dark", atau "system" (mengikuti sistem operasi).
 export function loadTheme() {
   const stored = readJson(STORAGE_KEYS.theme);
-  if (stored === "light" || stored === "dark") return stored;
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  if (stored === "light" || stored === "dark" || stored === "system") return stored;
+  return "system";
 }
 
 export const saveTransactions = (list) => writeJson(STORAGE_KEYS.transactions, list);
 export const saveBudgets = (list) => writeJson(STORAGE_KEYS.budgets, list);
 export const saveTheme = (theme) => writeJson(STORAGE_KEYS.theme, theme);
+
+export function loadPrivacyMode() {
+  return readJson(STORAGE_KEYS.privacyMode) === true;
+}
+
+export const savePrivacyMode = (enabled) => writeJson(STORAGE_KEYS.privacyMode, Boolean(enabled));
+
+export function loadLastPaymentMethod() {
+  const stored = readJson(STORAGE_KEYS.lastPaymentMethod);
+  return PAYMENT_METHODS.includes(stored) ? stored : "Tunai";
+}
+
+export function saveLastPaymentMethod(method) {
+  if (!PAYMENT_METHODS.includes(method)) return false;
+  return writeJson(STORAGE_KEYS.lastPaymentMethod, method);
+}
+
+export function loadRecurringTemplates() {
+  const stored = readJson(STORAGE_KEYS.recurring);
+  if (!Array.isArray(stored)) return [];
+  const seen = new Set();
+  return stored.filter((item) => {
+    if (!item || typeof item !== "object" || typeof item.id !== "string" || seen.has(item.id)) return false;
+    if (item.type !== "income" && item.type !== "expense") return false;
+    if (!Number.isInteger(item.amount) || item.amount <= 0) return false;
+    if (typeof item.category !== "string" || !item.category) return false;
+    seen.add(item.id);
+    return true;
+  });
+}
+
+export const saveRecurringTemplates = (list) => writeJson(STORAGE_KEYS.recurring, list);
 
 export function removeAllStoredData() {
   try {

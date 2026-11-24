@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { parseBackup, validateBudgetInput, validateTransactionInput } from "../src/utils/validation.js";
 import { createBackupJson, transactionsToCsv } from "../src/utils/fileExport.js";
-import { formatCompact, formatCurrency, formatPercent } from "../src/utils/formatCurrency.js";
+import { formatCompact, formatCurrency, formatDigitsInput, formatPercent } from "../src/utils/formatCurrency.js";
 import { buildDemoData } from "../src/utils/demoData.js";
 
 const valid = {
@@ -155,5 +155,8 @@ describe("format angka", () => {
     expect(formatPercent(Infinity)).toBe("-");
     expect(formatPercent(75)).toBe("75%");
     expect(formatCompact(1500000)).toMatch(/1,5/);
+    expect(formatDigitsInput("1500000")).toBe("1.500.000");
+    expect(formatDigitsInput("Rp 35.000")).toBe("35.000");
+    expect(formatDigitsInput("")).toBe("");
   });
 });

@@ -1,22 +1,37 @@
 import { supabase } from "./supabaseClient.js";
 import { mapTransactionFromDb, mapTransactionToDb, toDeterministicUuid } from "./dataMappers.js";
 
+const PAGE_SIZE = 1000;
+
 export async function fetchTransactions(userId) {
   if (!supabase || !userId) {
     return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };
   }
   try {
-    const { data, error } = await supabase
-      .from("transactions")
-      .select("*")
-      .eq("user_id", userId)
-      .order("date", { ascending: false })
-      .order("created_at", { ascending: false });
+    const allRows = [];
+    let from = 0;
 
-    if (error) {
-      return { ok: false, error: error.message || "Gagal mengambil data transaksi." };
+    // Ambil secara bertahap agar tidak terpotong batas bawaan 1.000 baris PostgREST.
+    while (true) {
+      const { data, error } = await supabase
+        .from("transactions")
+        .select("*")
+        .eq("user_id", userId)
+        .order("date", { ascending: false })
+        .order("created_at", { ascending: false })
+        .range(from, from + PAGE_SIZE - 1);
+
+      if (error) {
+        return { ok: false, error: error.message || "Gagal mengambil data transaksi." };
+      }
+
+      const chunk = data || [];
+      allRows.push(...chunk);
+      if (chunk.length < PAGE_SIZE) break;
+      from += PAGE_SIZE;
     }
-    return { ok: true, data: (data || []).map(mapTransactionFromDb) };
+
+    return { ok: true, data: allRows.map(mapTransactionFromDb) };
   } catch (err) {
     return { ok: false, error: err.message || "Gagal memuat transaksi dari cloud." };
   }
@@ -48,7 +63,7 @@ export async function updateTransaction(transaction, userId) {
     return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };
   }
   try {
-    const dbId = toDeterministicUuid(transaction.id);
+    const dbId = toDeterministicUuid(transaction.id, userId);
     const payload = {
       type: transaction.type,
       category: transaction.category,
@@ -80,7 +95,7 @@ export async function deleteTransaction(id, userId) {
     return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };
   }
   try {
-    const dbId = toDeterministicUuid(id);
+    const dbId = toDeterministicUuid(id, userId);
     const { error } = await supabase
       .from("transactions")
       .delete()
@@ -93,6 +108,21 @@ export async function deleteTransaction(id, userId) {
     return { ok: true };
   } catch (err) {
     return { ok: false, error: err.message || "Terjadi kesalahan saat menghapus transaksi." };
+  }
+}
+
+export async function deleteAllTransactions(userId) {
+  if (!supabase || !userId) {
+    return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };
+  }
+  try {
+    const { error } = await supabase.from("transactions").delete().eq("user_id", userId);
+    if (error) {
+      return { ok: false, error: error.message || "Gagal menghapus seluruh transaksi dari cloud." };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message || "Terjadi kesalahan saat menghapus seluruh transaksi." };
   }
 }
 

@@ -24,6 +24,9 @@ export const STORAGE_KEYS = {
   transactions: "fintrack_transactions_v1",
   budgets: "fintrack_budgets_v1",
   theme: "fintrack_theme_v1",
+  lastPaymentMethod: "fintrack_last_method_v1",
+  privacyMode: "fintrack_privacy_v1",
+  recurring: "fintrack_recurring_v1",
 };
 
 export const MAX_AMOUNT = 1_000_000_000_000; // 1 triliun Rupiah, batas wajar untuk input

@@ -235,6 +235,10 @@ describe("extractTargetAmount: angka dari pertanyaan pengguna", () => {
     expect(extractTargetAmount("")).toBeNull();
     expect(extractTargetAmount(null)).toBeNull();
     expect(extractTargetAmount("menabung 9.999 triliun")).toBeNull(); // di atas batas 1 triliun
+    // Hindari false-positive untuk angka non-nominal (peringkat, durasi bulan, persentase)
+    expect(extractTargetAmount("Top 5 pengeluaran bulan ini")).toBeNull();
+    expect(extractTargetAmount("Bandingkan 3 bulan terakhir")).toBeNull();
+    expect(extractTargetAmount("Bagaimana status anggaran 80%?")).toBeNull();
   });
 });
 

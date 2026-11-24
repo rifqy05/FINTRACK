@@ -23,3 +23,10 @@ export function formatPercent(value, digits = 0) {
   if (value === null || value === undefined || !Number.isFinite(value)) return "-";
   return `${value.toFixed(digits)}%`;
 }
+
+// Format string digit polos menjadi tampilan pemisah ribuan Indonesia (contoh: "1500000" -> "1.500.000").
+export function formatDigitsInput(raw) {
+  const digits = String(raw ?? "").replace(/\D/g, "");
+  if (!digits) return "";
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}

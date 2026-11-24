@@ -2,20 +2,31 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="FinTrack" />
     <meta
       name="description"
-      content="FinTrack: catat pemasukan, pengeluaran, anggaran, dan laporan keuangan pribadi. Data tersimpan di browser Anda."
+      content="FinTrack: catat pemasukan, pengeluaran, anggaran, dan laporan keuangan pribadi secara lokal atau tersinkron di cloud."
     />
     <title>FinTrack - Catatan Keuangan Pribadi</title>
     <script>
-      // Terapkan tema sebelum React dimuat supaya layar tidak berkedip.
+      // Terapkan tema, warna bilah status browser, dan mode privasi sebelum React dimuat agar layar tidak berkedip.
       (function () {
         try {
           var stored = JSON.parse(localStorage.getItem("fintrack_theme_v1"));
-          var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var dark = stored === "dark" ? true : stored === "light" ? false : systemDark;
           document.documentElement.classList.toggle("dark", dark);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", dark ? "#09090b" : "#f3f3ef");
+          if (JSON.parse(localStorage.getItem("fintrack_privacy_v1")) === true) {
+            document.documentElement.dataset.privacy = "true";
+          }
         } catch (e) {}
       })();
     </script>

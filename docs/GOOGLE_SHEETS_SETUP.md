@@ -21,11 +21,11 @@ Dokumen ini menjelaskan langkah-langkah menghubungkan FinTrack ke Google Sheets 
 1. Di menu atas spreadsheet, klik **Extensions** (Ekstensi) > **Apps Script**.
 2. Hapus semua kode default di dalam berkas `Code.gs`.
 3. Buka berkas `google-sheets/Code.gs` yang ada di proyek ini, salin seluruh kodenya, lalu tempelkan ke editor Google Apps Script.
-4. *(Disarankan)* Pada bagian:
+4. *(Wajib)* Pada bagian:
    ```javascript
    var CONFIG_SECRET_TOKEN = "fintrack-secret-token-change-me";
    ```
-   Ubah kata sandi tersebut menjadi token rahasia pilihan Anda (contoh: `kunciku12345`).
+   Ubah nilai tersebut menjadi token rahasia pilihan Anda (contoh: `kunciku12345`). Script akan menolak permintaan bila token masih memakai nilai bawaan.
 5. Klik ikon disket **Save project** (atau tekan `Ctrl + S`).
 
 ---

@@ -183,3 +183,34 @@ export function budgetUsageForMonth(budgets, transactions, month) {
     .map((budget) => ({ budget, ...calculateBudgetUsage(budget, transactions) }))
     .sort((a, b) => b.percent - a.percent);
 }
+
+/* ---------- Ringkasan per metode pembayaran / dompet ---------- */
+
+// Mengelompokkan pemasukan, pengeluaran, dan arus bersih per metode pembayaran, urut volume terbesar.
+export function summarizeByPaymentMethod(transactions) {
+  const map = new Map();
+  let totalVolume = 0;
+
+  for (const t of transactions) {
+    const method = t.paymentMethod || "Lainnya";
+    const entry = map.get(method) ?? { method, income: 0, expense: 0, net: 0, count: 0 };
+    if (t.type === "income") {
+      entry.income += t.amount;
+      entry.net += t.amount;
+    } else if (t.type === "expense") {
+      entry.expense += t.amount;
+      entry.net -= t.amount;
+    }
+    entry.count += 1;
+    totalVolume += t.amount;
+    map.set(method, entry);
+  }
+
+  return [...map.values()]
+    .map((row) => ({
+      ...row,
+      volume: row.income + row.expense,
+      sharePercent: totalVolume > 0 ? ((row.income + row.expense) / totalVolume) * 100 : 0,
+    }))
+    .sort((a, b) => b.volume - a.volume || b.count - a.count);
+}

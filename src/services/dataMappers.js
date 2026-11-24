@@ -8,11 +8,15 @@ export function isValidUuid(str) {
 /**
  * Mengubah string ID non-UUID (seperti "demo-1" atau "tx-...") menjadi UUID yang deterministik
  * sehingga aman dimasukkan ke kolom UUID PostgreSQL tanpa duplikasi saat migrasi berulang.
+ * Sertakan namespace (mis. userId) agar ID non-UUID yang sama dari dua pengguna berbeda
+ * tidak saling bertabrakan di Primary Key global PostgreSQL.
  */
-export function toDeterministicUuid(id) {
+export function toDeterministicUuid(id, namespace = "") {
   if (isValidUuid(id)) return id.toLowerCase();
 
-  const text = String(id || "");
+  const rawId = String(id || "");
+  const ns = typeof namespace === "string" ? namespace.trim() : "";
+  const text = ns ? `${ns}:${rawId}` : rawId;
   let h1 = 0xdeadbeef ^ text.length;
   let h2 = 0x41c6ce57;
   let h3 = 0x9e3779b9;
@@ -54,7 +58,7 @@ export function mapTransactionFromDb(row) {
 
 export function mapTransactionToDb(t, userId) {
   return {
-    id: toDeterministicUuid(t.id),
+    id: toDeterministicUuid(t.id, userId),
     user_id: userId,
     type: t.type,
     category: t.category,

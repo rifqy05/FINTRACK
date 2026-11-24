@@ -41,6 +41,14 @@ describe("dataMappers: validasi dan konversi UUID", () => {
     const uuidOther = toDeterministicUuid("demo-2");
     expect(isValidUuid(uuidOther)).toBe(true);
     expect(uuid1).not.toBe(uuidOther);
+
+    // Namespace user berbeda menghasilkan UUID berbeda (mencegah tabrakan PK multi-user)
+    const userA = toDeterministicUuid("demo-1", "user-a");
+    const userB = toDeterministicUuid("demo-1", "user-b");
+    expect(isValidUuid(userA)).toBe(true);
+    expect(isValidUuid(userB)).toBe(true);
+    expect(userA).not.toBe(userB);
+    expect(userA).toBe(toDeterministicUuid("demo-1", "user-a"));
   });
 });
 

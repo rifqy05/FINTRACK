@@ -100,46 +100,70 @@ export function savingsBaseline(transactions, monthKeys) {
 }
 
 // Angka dari pertanyaan pengguna (mis. "menabung 5 juta") dihitung di sini,
-// bukan diserahkan ke model AI.
+// bukan diserahkan ke model AI. Angka kecil tanpa konteks nominal (mis. "top 5",
+// "3 bulan terakhir", "80%") diabaikan agar tidak memicu simulasi palsu.
+const SAVINGS_INTENT_PATTERN = /\b(tabung|menabung|nabung|tabungan|target|simpan|menyimpan|kumpul|mengumpulkan|hemat|dana|beli)\b/i;
+const IGNORED_UNIT_FOLLOWUP = /^\s*(%|persen|bulan|bln|minggu|mgg|hari|tahun|thn|kategori|transaksi)\b/i;
+
 export function extractTargetAmount(text) {
   if (typeof text !== "string" || text.trim() === "") return null;
 
-  const match = text.toLowerCase().match(/(\d[\d.,]*)\s*(triliun|miliar|milyar|juta|jt|ribu|rb|k)?/);
-  if (!match) return null;
+  const lower = text.toLowerCase();
+  const hasSavingsIntent = SAVINGS_INTENT_PATTERN.test(lower);
+  const regex = /(rp\.?\s*)?(\d[\d.,]*)\s*(triliun|miliar|milyar|juta|jt|ribu|rb|k)?/g;
 
-  const rawNumber = match[1];
-  const unit = match[2] ?? "";
+  for (const match of lower.matchAll(regex)) {
+    const hasRp = Boolean(match[1]);
+    const rawNumber = match[2];
+    const unit = match[3] ?? "";
+    const afterIndex = (match.index ?? 0) + match[0].length;
+    const trailing = lower.slice(afterIndex);
 
-  let normalized = rawNumber;
-  if (rawNumber.includes(".") && rawNumber.includes(",")) {
-    // 1.500.000,50 -> titik ribuan, koma desimal
-    normalized = rawNumber.replace(/\./g, "").replace(",", ".");
-  } else if (rawNumber.includes(",")) {
-    normalized = rawNumber.replace(",", ".");
-  } else if (rawNumber.includes(".")) {
-    const parts = rawNumber.split(".");
-    const looksLikeThousands = parts.length > 2 || (parts.length === 2 && parts[1].length === 3);
-    normalized = looksLikeThousands ? parts.join("") : parts.join(".");
+    // Abaikan angka yang langsung diikuti satuan non-uang (mis. "3 bulan", "80%") bila tidak punya satuan Rupiah/uang.
+    if (!hasRp && !unit && IGNORED_UNIT_FOLLOWUP.test(trailing)) continue;
+
+    const looksLikeThousands = /^\d{1,3}(?:\.\d{3})+(?:,\d+)?$/.test(rawNumber);
+
+    let normalized = rawNumber;
+    if (rawNumber.includes(".") && rawNumber.includes(",")) {
+      // 1.500.000,50 -> titik ribuan, koma desimal
+      normalized = rawNumber.replace(/\./g, "").replace(",", ".");
+    } else if (rawNumber.includes(",")) {
+      normalized = rawNumber.replace(",", ".");
+    } else if (rawNumber.includes(".")) {
+      const parts = rawNumber.split(".");
+      const isThousands = parts.length > 2 || (parts.length === 2 && parts[1].length === 3);
+      normalized = isThousands ? parts.join("") : parts.join(".");
+    }
+
+    const base = Number(normalized);
+    if (!Number.isFinite(base) || base <= 0) continue;
+
+    const multiplier =
+      {
+        triliun: 1_000_000_000_000,
+        miliar: 1_000_000_000,
+        milyar: 1_000_000_000,
+        juta: 1_000_000,
+        jt: 1_000_000,
+        ribu: 1_000,
+        rb: 1_000,
+        k: 1_000,
+      }[unit] ?? 1;
+
+    const amount = Math.round(base * multiplier);
+    if (amount <= 0 || amount > MAX_TARGET_AMOUNT) continue;
+
+    // Tanpa penanda mata uang ("rp"), satuan ("juta"/"rb"), atau pemisah ribuan ("10.000"),
+    // hanya terima nominal >= 1.000 yang disertai konteks menabung/target.
+    if (!hasRp && !unit && !looksLikeThousands && (!hasSavingsIntent || amount < 1000)) {
+      continue;
+    }
+
+    return amount;
   }
 
-  const base = Number(normalized);
-  if (!Number.isFinite(base) || base <= 0) return null;
-
-  const multiplier =
-    {
-      triliun: 1_000_000_000_000,
-      miliar: 1_000_000_000,
-      milyar: 1_000_000_000,
-      juta: 1_000_000,
-      jt: 1_000_000,
-      ribu: 1_000,
-      rb: 1_000,
-      k: 1_000,
-    }[unit] ?? 1;
-
-  const amount = Math.round(base * multiplier);
-  if (amount <= 0 || amount > MAX_TARGET_AMOUNT) return null;
-  return amount;
+  return null;
 }
 
 // Simulasi penghematan deterministik: berapa bulan untuk mencapai target

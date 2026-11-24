@@ -59,8 +59,9 @@ export function createAssistantServer({ config = readServerEnv(), limiter, fetch
   const activeLimiter = limiter ?? createRateLimiter({ max: config.rateLimitMax, windowMs: config.rateLimitWindowMs });
 
   const server = createServer(async (req, res) => {
-    const origin = typeof req.headers.origin === "string" ? req.headers.origin : "";
-    const originAllowed = origin === "" || origin === config.allowedOrigin;
+    const origin = typeof req.headers.origin === "string" ? req.headers.origin.replace(/\/+$/, "") : "";
+    const allowedList = Array.isArray(config.allowedOrigins) ? config.allowedOrigins : [config.allowedOrigin];
+    const originAllowed = origin === "" || allowedList.includes(origin);
     const corsHeaders =
       originAllowed && origin
         ? {
@@ -134,7 +135,12 @@ export function createAssistantServer({ config = readServerEnv(), limiter, fetch
           fetchImpl,
         });
 
-        jsonResponse(res, result.status, result.body, corsHeaders);
+        const extraHeaders =
+          result.status === 429 && result.body?.retryAfterSeconds
+            ? { ...corsHeaders, "Retry-After": String(result.body.retryAfterSeconds) }
+            : corsHeaders;
+
+        jsonResponse(res, result.status, result.body, extraHeaders);
         return;
       }
 
@@ -163,4 +169,10 @@ if (isMainModule) {
       console.log("Catatan  : AI_PROVIDER_API_KEY / AI_MODEL belum diisi, jawaban akan dihitung aplikasi.");
     }
   });
+
+  const shutdown = () => {
+    server.close(() => process.exit(0));
+  };
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 }

@@ -8,8 +8,17 @@
 export function createRateLimiter({ max, windowMs }) {
   const hits = new Map();
 
+  function pruneExpired(now) {
+    for (const [entryKey, times] of hits.entries()) {
+      const fresh = times.filter((time) => now - time < windowMs);
+      if (fresh.length === 0) hits.delete(entryKey);
+      else if (fresh.length !== times.length) hits.set(entryKey, fresh);
+    }
+  }
+
   return {
     check(key, now = Date.now()) {
+      if (hits.size > 100) pruneExpired(now);
       const active = (hits.get(key) ?? []).filter((time) => now - time < windowMs);
 
       if (active.length >= max) {

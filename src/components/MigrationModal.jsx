@@ -52,8 +52,8 @@ export default function MigrationModal({
         </p>
 
         <p>
-          Anda dapat menyalin data tersebut ke akun Supabase Anda agar tersimpan secara aman dan dapat
-          diakses dari perangkat lain.
+          Anda dapat menyalin data tersebut ke akun cloud FinTrack agar tersimpan aman dan dapat diakses dari perangkat
+          lain.
         </p>
 
         <div className="rounded-lg border border-line bg-surface-2 p-3 text-xs">

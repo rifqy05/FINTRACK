@@ -19,7 +19,7 @@ import {
   toAiPayload,
   validateSummaryForAi,
 } from "../src/utils/financeSummary.js";
-import { addMonths, currentMonthKey, isValidMonthKey } from "../src/utils/dates.js";
+import { addMonths, currentMonthKey, daysInMonth, isValidMonthKey } from "../src/utils/dates.js";
 import { askAiModel } from "./aiProvider.js";
 import { buildEmptyPeriodAnswer, buildFallbackAnswer } from "./fallbackAnswer.js";
 import { fetchBudgetsForMonth, fetchTransactionsSince } from "./supabaseData.js";
@@ -93,9 +93,14 @@ export async function handleAssistantAsk({
 
   const monthKey = parseMonthRequest(month, now);
   const fromDate = `${addMonths(monthKey, -config.dataMonthsBack)}-01`;
+  const toDate = `${monthKey}-${String(daysInMonth(monthKey)).padStart(2, "0")}`;
 
   const [transactionResult, budgetResult] = await Promise.all([
-    fetchTransactionsSince({ token, userId: auth.user.id, fromDate, limit: config.dataRowLimit }, config, fetchImpl),
+    fetchTransactionsSince(
+      { token, userId: auth.user.id, fromDate, toDate, limit: config.dataRowLimit },
+      config,
+      fetchImpl,
+    ),
     fetchBudgetsForMonth({ token, userId: auth.user.id, month: monthKey }, config, fetchImpl),
   ]);
 

@@ -63,6 +63,21 @@ export async function deleteBudget({ month, category }, userId) {
   }
 }
 
+export async function deleteAllBudgets(userId) {
+  if (!supabase || !userId) {
+    return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };
+  }
+  try {
+    const { error } = await supabase.from("budgets").delete().eq("user_id", userId);
+    if (error) {
+      return { ok: false, error: error.message || "Gagal menghapus seluruh anggaran dari cloud." };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message || "Terjadi kesalahan saat menghapus seluruh anggaran." };
+  }
+}
+
 export async function batchUpsertBudgets(budgets, userId) {
   if (!supabase || !userId) {
     return { ok: false, error: "Koneksi database atau sesi pengguna tidak tersedia." };

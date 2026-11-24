@@ -28,14 +28,19 @@ async function restRequest(path, { token, config, fetchImpl }) {
   }
 }
 
-export async function fetchTransactionsSince({ token, userId, fromDate, limit }, config, fetchImpl = fetch) {
-  const query = new URLSearchParams({
+export async function fetchTransactionsSince({ token, userId, fromDate, toDate, limit }, config, fetchImpl = fetch) {
+  const params = {
     select: "id,type,category,amount,date",
     user_id: `eq.${userId}`,
-    date: `gte.${fromDate}`,
     order: "date.desc",
     limit: String(limit),
-  });
+  };
+  if (toDate) {
+    params.and = `(date.gte.${fromDate},date.lte.${toDate})`;
+  } else {
+    params.date = `gte.${fromDate}`;
+  }
+  const query = new URLSearchParams(params);
 
   try {
     const response = await restRequest(`transactions?${query.toString()}`, { token, config, fetchImpl });

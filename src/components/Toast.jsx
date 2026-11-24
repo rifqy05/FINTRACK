@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-import { CircleAlert, CircleCheck, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CircleAlert, CircleCheck, RotateCcw, X } from "lucide-react";
 
-// Pesan singkat sukses atau error. Hilang sendiri setelah beberapa detik.
+// Pesan singkat sukses atau error, mendukung tombol aksi cepat (mis. "Urungkan" saat hapus transaksi).
 export default function Toast({ toast, onDismiss }) {
+  const [paused, setPaused] = useState(false);
+
   useEffect(() => {
-    if (!toast) return undefined;
-    const timer = setTimeout(onDismiss, toast.type === "error" ? 7000 : 4000);
+    if (!toast || paused) return undefined;
+    const duration = toast.type === "error" ? 7000 : toast.action ? 6000 : 4000;
+    const timer = setTimeout(onDismiss, duration);
     return () => clearTimeout(timer);
-  }, [toast, onDismiss]);
+  }, [toast, paused, onDismiss]);
 
   if (!toast) return <div aria-live="polite" className="sr-only" />;
 
@@ -17,21 +20,39 @@ export default function Toast({ toast, onDismiss }) {
   return (
     <div
       aria-live={isError ? "assertive" : "polite"}
-      className="pointer-events-none fixed inset-x-3 bottom-20 z-40 flex justify-center lg:bottom-6 lg:justify-end lg:pr-3"
+      className="pointer-events-none fixed inset-x-3 bottom-36 z-40 flex justify-center lg:bottom-6 lg:justify-end lg:pr-3"
     >
       <div
         key={toast.id}
         role={isError ? "alert" : "status"}
-        className="rise-in pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border border-line bg-surface p-4 shadow-xl"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
+        className="rise-in pointer-events-auto flex w-full max-w-md items-center gap-3 rounded-2xl border border-line bg-surface p-3.5 pl-4 shadow-xl"
       >
         <Icon
-          size={20}
-          strokeWidth={1.75}
+          size={19}
+          strokeWidth={1.85}
           aria-hidden="true"
-          className={`mt-0.5 shrink-0 ${isError ? "text-expense" : "text-income"}`}
+          className={`shrink-0 ${isError ? "text-expense" : "text-income"}`}
         />
-        <p className="flex-1 text-sm leading-relaxed">{toast.message}</p>
-        <button type="button" onClick={onDismiss} className="btn-icon -m-2 size-9" aria-label="Tutup pesan">
+        <p className="min-w-0 flex-1 text-sm leading-snug text-pretty">{toast.message}</p>
+        {toast.action ? (
+          <button
+            type="button"
+            onClick={() => {
+              const fn = toast.action.onClick;
+              onDismiss();
+              fn();
+            }}
+            className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-line-strong bg-surface-2 px-3 text-xs font-semibold text-ink transition-colors hover:bg-surface-3"
+          >
+            <RotateCcw size={13} strokeWidth={2} aria-hidden="true" />
+            {toast.action.label}
+          </button>
+        ) : null}
+        <button type="button" onClick={onDismiss} className="btn-icon -mr-1.5 shrink-0" aria-label="Tutup pesan">
           <X size={16} strokeWidth={1.75} aria-hidden="true" />
         </button>
       </div>
